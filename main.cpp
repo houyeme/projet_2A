@@ -1,27 +1,21 @@
-#include "mainwindow.h"
+#include "login.h"
+#include "connexions.h"
+#include <QFile>
 #include <QApplication>
-#include <QMessageBox>
-#include "connexion.h"
-#include <QtDebug>
 
 int main(int argc, char *argv[])
-{  QApplication a(argc, argv);
-    QApplication::setStyle("plastique");
-    Connexion c;
+{
+    QApplication a(argc, argv);
 
-  bool test=c.ouvrirConnexion();
-  MainWindow w;
-  if(test)
-  {w.show();
+    QFile stylefile(":/image/a.qss");
+    stylefile.open(QFile::ReadOnly);
+    QString style(stylefile.readAll());
+    a.setStyleSheet(style);
 
-      QMessageBox::critical(nullptr, QObject::tr("database is not open"),
-                  QObject::tr("connection avec succés.\n"
-                              "Click Cancel to exit."), QMessageBox::Cancel);
-
-  }
-  else
-      QMessageBox::critical(nullptr, QObject::tr("database is not open"),
-                  QObject::tr("connection failed.\n"
-                              "Click Cancel to exit."), QMessageBox::Cancel);
-
-    return a.exec();}
+    LOGIN w;
+    Connexions c;
+    if(c.ouvrirConnexion()){
+    w.show();
+    }
+    return a.exec();
+}

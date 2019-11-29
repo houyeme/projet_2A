@@ -1,6 +1,6 @@
 #include "statistiques.h"
 #include "ui_statistiques.h"
-#include "connexion.h"
+#include "connexions.h"
 #include <QMap>
 #include <QVector>
 #include <QString>
@@ -27,11 +27,11 @@ statistiques::statistiques(QWidget *parent) :
     QVector <QPieSlice *> tab;
         QPieSeries *series = new QPieSeries();
         QSqlQuery qry;
-        float tous=0;
-        float tunis=0;
-        float importe=0;
+        int tous=0;
+        int male=0;
+        int female=0;
 
-        qry.prepare("select * from equipement ");
+        qry.prepare("select * from patient ");
         if (qry.exec())
         {
 
@@ -39,13 +39,13 @@ statistiques::statistiques(QWidget *parent) :
             {
 
     tous++;
-    if (qry.value(4)=="Tunis")
+    if (qry.value(4)=="male")
     {
-        tunis++;
+        male++;
     }
-    else if(qry.value(4)=="Importe")
+    else if(qry.value(4)=="female")
     {
-        importe++;
+        female++;
     }
 
 
@@ -53,16 +53,16 @@ statistiques::statistiques(QWidget *parent) :
         }
 
 
-        qDebug () << "tunis " << tunis;
-            qDebug () << "importe " << importe;
+        qDebug () << "male " << male;
+            qDebug () << "female " << female;
 
 
-float testing1 =(tunis*100)/tous;
+float testing1 =(male*100)/tous;
 QString pleasework = QString::number(testing1);
-float testing2 =(importe*100)/tous;
+float testing2 =(male*100)/tous;
 QString pleasework1 = QString::number(testing2);
-    series ->append("tunis "+pleasework+"%",(tunis));
-        series ->append("Importe "+pleasework1+"%",(importe));
+    series ->append("male "+pleasework+"%",(male));
+        series ->append("female "+pleasework1+"%",(female));
 
 
 QPieSlice * slice0= series->slices().at(0);
@@ -70,7 +70,7 @@ slice0->setLabelVisible();
 QPieSlice * slice1= series->slices().at(1);
 slice1->setLabelVisible();
 
-    if (tunis>importe)
+    if (male>female)
     {
 
        slice0->setExploded();
@@ -92,7 +92,7 @@ slice1->setLabelVisible();
 
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("EQUIPEMENT  : ");
+    chart->setTitle("produit  : ");
     chart->legend()->hide();
 
 

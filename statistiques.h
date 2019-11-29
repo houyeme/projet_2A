@@ -1,5 +1,6 @@
 #ifndef STATISTIQUES_H
 #define STATISTIQUES_H
+#include <QSound>
 
 #include <QWidget>
 
