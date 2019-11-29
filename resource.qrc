@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/img"/>
+    <qresource prefix="/">
+        <file>img/urgence.jpg</file>
+        <file>img/208960-OZUKIU-784.jpg</file>
+        <file>img/us.png</file>
+        <file>img/s.png</file>
+        <file>img/pellule.jpg</file>
+        <file>img/button.jpg</file>
+        <file>img/75650496_406985126847732_4493379503581560832_n.jpg</file>
+        <file>img/Webp.net-resizeimage (2).png</file>
+        <file>img/Webp.net-resizeimage (3).png</file>
+        <file>img/Webp.net-resizeimage (1).png</file>
+        <file>img/Webp.net-resizeimage.png</file>
+    </qresource>
+</RCC>
