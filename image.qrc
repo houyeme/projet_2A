@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/bakground">
+        <file>login.png</file>
+        <file>bg.png</file>
+        <file>icon-authentification.png</file>
+        <file>icon2.png</file>
+        <file>mainbg.png</file>
+    </qresource>
+</RCC>
