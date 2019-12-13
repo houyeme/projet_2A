@@ -552,11 +552,25 @@ Background-color : Black;
         <string/>
        </property>
       </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>10</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Imprimer</string>
+       </property>
+      </widget>
       <zorder>label_10</zorder>
       <zorder>tabpatient</zorder>
       <zorder>recherche_tri</zorder>
       <zorder>checkBox</zorder>
       <zorder>champ</zorder>
+      <zorder>pushButton_2</zorder>
      </widget>
      <widget class="QWidget" name="tab_11">
       <attribute name="title">
@@ -733,7 +747,7 @@ Background-color : Black;
       </font>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_15">
       <attribute name="title">
@@ -750,10 +764,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>false</underline>
         </font>
        </property>
@@ -792,10 +805,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>false</underline>
         </font>
        </property>
@@ -814,10 +826,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>false</underline>
         </font>
        </property>
@@ -836,10 +847,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>false</underline>
         </font>
        </property>
@@ -879,14 +889,6 @@ Background-color : Black;
          <height>21</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
        <property name="text">
         <string>ID med :</string>
        </property>
@@ -902,11 +904,14 @@ Background-color : Black;
        </property>
       </widget>
       <widget class="QLineEdit" name="id_medecin">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>270</x>
          <y>160</y>
-         <width>211</width>
+         <width>81</width>
          <height>20</height>
         </rect>
        </property>
@@ -954,6 +959,16 @@ Background-color : Black;
         <string/>
        </property>
       </widget>
+      <widget class="QComboBox" name="comboBox_6">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>160</y>
+         <width>121</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
       <zorder>label_21</zorder>
       <zorder>label_6</zorder>
       <zorder>num</zorder>
@@ -967,6 +982,7 @@ Background-color : Black;
       <zorder>references_patient</zorder>
       <zorder>id_medecin</zorder>
       <zorder>timeEdit</zorder>
+      <zorder>comboBox_6</zorder>
      </widget>
      <widget class="QWidget" name="tab_16">
       <attribute name="title">
@@ -983,10 +999,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>false</underline>
         </font>
        </property>
@@ -1005,10 +1020,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>true</underline>
         </font>
        </property>
@@ -1048,10 +1062,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>false</underline>
         </font>
        </property>
@@ -1070,10 +1083,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>false</underline>
         </font>
        </property>
@@ -1130,14 +1142,6 @@ Background-color : Black;
          <height>20</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
        <property name="text">
         <string>Date             :</string>
        </property>
@@ -1164,24 +1168,19 @@ Background-color : Black;
          <height>16</height>
         </rect>
        </property>
-       <property name="font">
-        <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
-       </property>
        <property name="text">
         <string>Id medecin :</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="id_med">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="geometry">
         <rect>
          <x>250</x>
          <y>220</y>
-         <width>201</width>
+         <width>71</width>
          <height>20</height>
         </rect>
        </property>
@@ -1199,6 +1198,16 @@ Background-color : Black;
         <string/>
        </property>
       </widget>
+      <widget class="QComboBox" name="comboBox_7">
+       <property name="geometry">
+        <rect>
+         <x>330</x>
+         <y>220</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+      </widget>
       <zorder>label_22</zorder>
       <zorder>label_24</zorder>
       <zorder>label_25</zorder>
@@ -1213,6 +1222,7 @@ Background-color : Black;
       <zorder>old_date_2</zorder>
       <zorder>label_13</zorder>
       <zorder>id_med</zorder>
+      <zorder>comboBox_7</zorder>
      </widget>
      <widget class="QWidget" name="tab_17">
       <attribute name="title">
@@ -1249,14 +1259,6 @@ Background-color : Black;
          <width>111</width>
          <height>17</height>
         </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
-        </font>
        </property>
        <property name="text">
         <string>decroissant</string>
@@ -1326,10 +1328,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>false</underline>
         </font>
        </property>
@@ -1369,10 +1370,9 @@ Background-color : Black;
        </property>
        <property name="font">
         <font>
-         <family>DoctorJekyll</family>
-         <pointsize>12</pointsize>
-         <weight>50</weight>
-         <bold>false</bold>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
          <underline>true</underline>
         </font>
        </property>

@@ -10,5 +10,24 @@
         <file>envoyer.png</file>
         <file>bg.png</file>
         <file>mainbg.png</file>
+        <file>img/add-file.png</file>
+        <file>img/13-136155_tech-frame-png-clipart-frame-for-text-png.png</file>
+        <file>img/78067269_1085074361837470_8713743608492064768_n.png</file>
+        <file>img/email.png</file>
+        <file>img/file.png</file>
+        <file>img/hethi1.png</file>
+        <file>img/hethi2.png</file>
+        <file>img/loupe.png</file>
+        <file>img/paper-plane.png</file>
+        <file>img/pen.png</file>
+        <file>img/printer.png</file>
+        <file>img/settings.png</file>
+        <file>img/speech.png</file>
+        <file>img/trash.png</file>
+        <file>img/Webp.net-resizeimage (1).png</file>
+        <file>img/Webp.net-resizeimage.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>img/bb.jpg</file>
     </qresource>
 </RCC>

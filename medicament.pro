@@ -19,10 +19,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     connexion.cpp \
-    dialog.cpp \
-    equipement.cpp \
+    equipement_paramedicale.cpp \
     gestion_de_mediacament.cpp \
-    gestion_de_mediacament1.cpp \
     main.cpp \
     login.cpp \
     medicament.cpp \
@@ -44,10 +42,8 @@ SOURCES += \
 
 HEADERS += \
     connexion.h \
-    dialog.h \
-    equipement.h \
+    equipement_paramedicale.h \
     gestion_de_mediacament.h \
-    gestion_de_mediacament1.h \
     login.h \
     medicament.h \
     notification.h \
@@ -69,9 +65,7 @@ HEADERS += \
     src/smtpexports.h
 
 FORMS += \
-    dialog.ui \
     gestion_de_mediacament.ui \
-    gestion_de_mediacament1.ui \
     login.ui
 
 # Default rules for deployment.

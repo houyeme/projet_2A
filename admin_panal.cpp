@@ -10,8 +10,9 @@ admin_panal::admin_panal(QWidget *parent) :
     ui(new Ui::admin_panal)
 {
     ui->setupUi(this);
-    makePolt();
+    music->setMedia(QUrl("C:/Users/ASUS/Desktop/Nouveau dossier (2)/Ash - Mosaïque.mp3"));
 refresh();
+
 }
 
 admin_panal::~admin_panal()
@@ -22,7 +23,7 @@ void admin_panal::afficher_notification(int *x){
     bool test;
     ui->listView->setModel(tmpcontrat.afficher_list_fin(&test));
     if((test)&&(*x<ui->listView->model()->rowCount())){
-    notifcation n;
+    notifcation n("NOTIFICATION CONTRAT","un contrat se termine bientot");
     n.afficher();
     ui->main->setCurrentIndex(2);
     *x=ui->listView->model()->rowCount();
@@ -36,6 +37,12 @@ void admin_panal::initialiser_formulaire(){
     ui->Nom->clear();
     ui->Prenom->clear();
     ui->Num_cabinet->clear();
+}
+bool admin_panal::verif_ajouter_medecin(){
+
+    return (ui->Id->text()!="")&&(ui->specilite->text()!="")&&(ui->Mot_de_passe->text()!="")&&(ui->Matricule->text()!="")&&(ui->Nom->text()!="")&& (ui->Prenom->text()!="")&&(ui->Num_cabinet->text()!="");
+
+
 }
 
 void admin_panal::initialiser_formulaire2(){
@@ -58,6 +65,11 @@ void admin_panal::on_pushButton_clicked()
 {
  QString id,specialite ,mot_de_passe,Matricule,Nom,Prenom;
  int Num_cabinet ;
+ Matricule=ui->Matricule->text();
+ if(tmppersonnel.chercher(Matricule)){
+      QMessageBox::warning(this, tr("ERREUR"), tr("medecin déja saisir.\n"));
+ }else{
+ if(verif_ajouter_medecin()){
  id=ui->Id->text();
  specialite=ui->specilite->text();
  mot_de_passe=ui->Mot_de_passe->text();
@@ -72,7 +84,11 @@ refresh();
     ui->Resultat->setText(Matricule+" a été bien enregistré ");
 }
 }
-
+else{
+     QMessageBox::warning(this, tr("ERREUR"), tr("champs non valid.\n"));
+ }
+}
+}
 void admin_panal::on_pushButton_2_clicked()
 {ui->Resultat->setText("");
     initialiser_formulaire();
@@ -159,6 +175,7 @@ ui->tab_chauffeur->setModel(tmpch.afficher());
 ui->comboBox_10->setModel(tmpch.afficher_liste_res());
 ui->comboBox_11->setModel(tmpch.afficher_liste_res());
 afficher_notification(&x);
+makePolt();
 }
 
 void admin_panal::on_comboBox_5_activated(const QString &arg1)
@@ -621,9 +638,8 @@ void admin_panal::makePolt()
           QVector<double> ticks;
           QVector<QString> labels;
 
-          QSqlQuery q;
+          QSqlQuery q=tmpcontrat.afficher_num_contrat();
           int i=0;
-          q.exec("select num_contrat from contrat");
           while (q.next()) {
               QString adresse= q.value(0).toString();
               i++;
@@ -634,6 +650,7 @@ void admin_panal::makePolt()
           textTicker->addTicks(ticks, labels);
           ui->customPlot->xAxis->setTicker(textTicker);
           ui->customPlot->xAxis->setTickLabelRotation(60);
+          ui->customPlot->xAxis->setLabel("Num Contrat");
           ui->customPlot->xAxis->setSubTicks(false);
           ui->customPlot->xAxis->setTickLength(0, 4);
           ui->customPlot->xAxis->setRange(0, 8);
@@ -647,7 +664,7 @@ void admin_panal::makePolt()
           // prepare y axis:
           ui->customPlot->yAxis->setRange(0,3000);
           ui->customPlot->yAxis->setPadding(5); // a bit more space to the left border
-          ui->customPlot->yAxis->setLabel("Statistiques");
+          ui->customPlot->yAxis->setLabel("Salaire");
           ui->customPlot->yAxis->setBasePen(QPen(Qt::white));
           ui->customPlot->yAxis->setTickPen(QPen(Qt::white));
           ui->customPlot->yAxis->setSubTickPen(QPen(Qt::white));
@@ -660,7 +677,7 @@ void admin_panal::makePolt()
           // Add data:
 
           QVector<double> PlaceData;
-          QSqlQuery q1("select salaire from contrat ");
+          QSqlQuery q1=tmpcontrat.afficher_num_contrat();
           while (q1.next()) {
                         int  nbr_fautee = q1.value(0).toInt();
                         PlaceData<< nbr_fautee;
@@ -676,10 +693,447 @@ void admin_panal::makePolt()
           ui->customPlot->legend->setFont(legendFont);
           ui->customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
-
-
-
-
-
 }
 
+
+
+void admin_panal::on_pushButton_31_clicked()
+{
+    music->play();
+}
+
+void admin_panal::on_pushButton_17_clicked()
+{
+    music->pause();
+}
+
+void admin_panal::on_horizontalSlider_sliderMoved(int position)
+{
+    music->setVolume(position);
+
+}
+void admin_panal::dark_mode(){
+    ui->central->setStyleSheet("#central{background-image: url(:/bakground/dark_bg.png);}"
+     "#Personnel{"
+                            "background-color:grey;"
+                            "}"
+     "#contart{"
+     "background-color:#202040;"
+      "}"
+                               "#notification{"
+                               "background-color:#202040;"
+                                "}"
+                               "#statistique{"
+                               "background-color:#202040;"
+                                "}"
+
+                            "#medecin{"
+                            "background-color:#202040;"
+                            "}"
+                            "#pharmacien{"
+                            "background-color:#202040;"
+                            "}"
+                            "#contrat{"
+                            "background-color:#202040;"
+                            "}"
+                            "#responsable{"
+                            "background-color:#202040;"
+                            "}"
+                            "#secretaire{"
+                            "background-color:#202040;"
+                            "}"
+                            "#chauffeur{background-color:#202040;"
+
+                            "}"
+                            "QLineEdit {"
+                            "background:transparent;"
+                            "border:none;"
+                            "border-bottom:1px solid #b030b0;"
+                            "font: 12pt Arial;"
+                            "color: #602080;"
+                            "}"
+                            "QPushButton{"
+                            "font: 12pt Arial;"
+                            "color:white;"
+                            "background-color :#602080;"
+                             "border-radius:5px;"
+                            "}"
+                            "QPushButton:hover{"
+                            "background-color:rgba(96,32,128,0.8);}"
+                            "QComboBox{"
+                            "font: 12pt Arial;"
+                            "color:white;"
+                            "background-color :#602080;"
+                             "border-top-right-radius: 5px 5px;"
+                              "border-bottom-right-radius: 5px 5px;"
+                              "}"
+                                                                  "QComboBox:drop-down {"
+                                                                  "border:none;}"
+                                                                  "QComboBox QAbstractItemView {"
+                                                                  "font: 12pt Arial;"
+                                                                  "color:white;"
+                                                                  "background-color :#602080;"
+                                                                  "selection-background-color:rgba(0,0,0,0.2);}");
+    ui->tabWidget_2->setStyleSheet(
+                                   "QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #602080;"
+                                   "font: 12pt Arial;"
+                                   "color: #2da5d5;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_9->setStyleSheet(
+                "QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #602080;"
+                                   "font: 12pt Arial;"
+                                   "color: #602080;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_10->setStyleSheet(  "QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #602080;"
+                                   "font: 12pt Arial;"
+                                   "color: #602080;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_6->setStyleSheet("QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #602080;"
+                                   "font: 12pt Arial;"
+                                   "color: #2da5d5;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_7->setStyleSheet("QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #602080;"
+                                   "font: 12pt Arial;"
+                                   "color: #602080;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_3->setStyleSheet("QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #602080;"
+                                   "font: 12pt Arial;"
+                                   "color: #602080;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#602080;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+);
+}
+
+void admin_panal::par_defaut(){
+    ui->central->setStyleSheet("");
+    ui->central->setStyleSheet("#central{"
+                              " background-image: url(:/bakground/mainbg.png);"
+                           "}"
+                           "#Personnel{background-color:grey;"
+                           "}"
+                           "#medecin{"
+                           "background-color:#7ed6d8;"
+                          " }"
+                           "#pharmacien{"
+                          " background-color:#7ed6d8;"
+                           "}"
+                          " #contrat{"
+                           "background-color:#7ed6d8;"
+                           "}"
+                           "#responsable{"
+                           "background-color:#7ed6d8;"
+                           "}"
+                          " #secretaire{"
+                           "background-color:#7ed6d8;"
+                           "}"
+                           "#chauffeur{background-color:#7ed6d8;"
+
+                           "}"
+                           "QComboBox{"
+                           "font: 12pt Arial;"
+                           "color:white;"
+                           "background-color :#2da5d5;"
+                           "border-top-right-radius: 5px 5px;"
+                           "border-bottom-right-radius: 5px 5px;"
+                           "}"
+                           "QComboBox:drop-down {"
+                           "    border:none;}"
+                           "QLineEdit {"
+                           "background:transparent;"
+                           "border:none;"
+                           "border-bottom:1px solid #2da5d5;"
+                           "font: 12pt Arial;"
+                           "color: #2da5d5;}"
+                           "QPushButton{"
+                           "font: 12pt Arial;"
+                           "color:white;"
+                           "background-color :#2da5d5;"
+                           "border-radius:10px;"
+                           "}"
+                           "QPushButton:hover{"
+                           "background-color:rgba(126,214,216,0.8);"
+                           "}");
+    ui->tabWidget_2->setStyleSheet("QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #2da5d5;"
+                                   "font: 12pt Arial;"
+                                   "color: #2da5d5;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_9->setStyleSheet("QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #2da5d5;"
+                                   "font: 12pt Arial;"
+                                   "color: #2da5d5;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_10->setStyleSheet("QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #2da5d5;"
+                                   "font: 12pt Arial;"
+                                   "color: #2da5d5;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_6->setStyleSheet("QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #2da5d5;"
+                                   "font: 12pt Arial;"
+                                   "color: #2da5d5;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+
+);
+    ui->tabWidget_7->setStyleSheet("QComboBox{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-top-right-radius: 5px 5px;"
+                                   "border-bottom-right-radius: 5px 5px;"
+                                   "}"
+                                   "QComboBox:drop-down {"
+                                   "    border:none;}"
+                                   "QLineEdit {"
+                                   "background:transparent;"
+                                   "border:none;"
+                                   "border-bottom:1px solid #2da5d5;"
+                                   "font: 12pt Arial;"
+                                   "color: #2da5d5;}"
+                                   "QPushButton{"
+                                   "font: 12pt Arial;"
+                                   "color:white;"
+                                   "background-color :#2da5d5;"
+                                   "border-radius:10px;"
+                                   "}"
+                                   "QPushButton:hover{"
+                                   "background-color:rgba(126,214,216,0.8);"
+                                   "}"
+);
+ ui->tabWidget_3->setStyleSheet("QComboBox{"
+                                "font: 15pt Arial;"
+                                "color:white;"
+                               " background-color :#2da5d5;"
+                               " border-top-right-radius: 5px 5px;"
+                               " border-bottom-right-radius: 5px 5px;"
+                                "}"
+                                "QComboBox:drop-down { "
+                                "   border:none;} "
+                                "QLineEdit {"
+                                "background:transparent;"
+                               " border:none;"
+                                "border-bottom:1px solid #2da5d5;"
+                               " font: 12pt Arial ;"
+                                "color: #2da5d5;}"
+                                "QPushButton{"
+                                "font: 15pt Arial;"
+                                "color:white;"
+                                "background-color :#2da5d5;"
+                                "border-radius:10px;"
+                                "}"
+                                "QPushButton:hover{"
+                                "background-color:rgba(126,214,216,0.8);"
+                                "}"
+                                );
+}

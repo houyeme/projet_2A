@@ -4,8 +4,14 @@
 #include <QSqlQueryModel>
 #include <QDebug>
 #include "statistiques.h"
-#include "notification.h"
-#include <QSound>
+#include <QCheckBox>
+#include <QPrinter>
+#include <qpagedpaintdevice.h>
+#include <QDialog>
+#include <QPrintDialog>
+#include "notifcation.h"
+#include "statistique.h"
+#include <QMediaPlayer>
 gestion_des_patients::gestion_des_patients(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gestion_des_patients)
@@ -59,9 +65,16 @@ void gestion_des_patients::on_ajouter_clicked()
     tmppatient.setsexe(sexe);
     if(ui->nom->hasAcceptableInput() && ui->prenom->hasAcceptableInput())
  {  if( tmppatient.ajouter_patient()){ refresh();
-            QString okd="";
-                 notification ok;
-                 ok.notification_ajout_patient(okd);
+           notifcation n("News","Un nouveau patient a été ajouté !") ;
+           player = new QMediaPlayer;
+                   connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+                   player->setMedia(QUrl::fromLocalFile("C:/Users/ASUS/Downloads/ajout succe.mp3"));
+                   player->setVolume(1000);
+                   player->play();
+          n.afficher();
+
+
+
 }
 }
 }
@@ -73,6 +86,11 @@ void gestion_des_patients::on_archiver_clicked()
 if(tmppatient.archiver_patient()){
     refresh();
     ui->supprimer->clear();
+    player = new QMediaPlayer;
+            connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+            player->setMedia(QUrl::fromLocalFile("C:/Users/ASUS/Downloads/supp succ.mp3"));
+            player->setVolume(1000);
+            player->play();
 }
 
 }
@@ -84,7 +102,12 @@ void gestion_des_patients::on_modifier_p_clicked()
 
        bool test=tmppatient.modifier_patient();
 if(ui->nom_2->hasAcceptableInput() && ui->prenom_2->hasAcceptableInput()){
-       if(test){refresh();}
+       if(test){refresh();
+           player = new QMediaPlayer;
+                   connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+                   player->setMedia(QUrl::fromLocalFile("C:/Users/ASUS/Downloads/modif succ.mp3"));
+                   player->setVolume(1000);
+                   player->play();}
  }
 }
 void gestion_des_patients::refresh(){
@@ -95,7 +118,8 @@ ui->references_patient->setModel(tmppatient.afficher_liste_patient());
 ui->tabrendez->setModel(tmprend.afficher_rendez_vous());
 ui->comboBox_3->setModel(tmprend.afficher_liste_rendez_vous());
 ui->comboBox_4->setModel(tmprend.afficher_liste_rendez_vous());
-
+ui->comboBox_6->setModel(tmpmedecin.afficher_liste_id());
+ui->comboBox_7->setModel(tmpmedecin.afficher_liste_id());
 }
 
 void gestion_des_patients::on_comboBox_activated(const QString &arg1)
@@ -138,6 +162,9 @@ void gestion_des_patients::on_ajouter_2_clicked()
     qDebug()<<tmprend.get_id_sec()<<tmprend.get_reference()<<tmprend.get_num_rendez_vous()<<tmprend.get_id_med();
     QTime nv_time;
     QDate nv_date;
+    if(tmprend.chercher()){
+        QMessageBox::warning(this, tr("ERREUR"), tr("rendez_vous déja existe.\n"));
+    }else{
     while (tmprend.recherche_rendez_vous()){
         nv_time=tmprend.get_time_rendez_vous().addSecs(3600);
         tmprend.settime_rendez_vous( nv_time);
@@ -150,13 +177,17 @@ void gestion_des_patients::on_ajouter_2_clicked()
        }
     }
     if( tmprend.ajouter_rendez_vous()){ refresh();
-        QString okd="";
-             notification ok;
-             ok.notification_ajout_rdv(okd);
+        notifcation n("News","Un nouveau rendez-vous a été ajoutée !") ;
+       n.afficher();
+       player = new QMediaPlayer;
+               connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+               player->setMedia(QUrl::fromLocalFile("C:/Users/ASUS/Downloads/ajout succe.mp3"));
+               player->setVolume(1000);
+               player->play();
 }
     }
 
-
+}
 void gestion_des_patients::on_references_patient_activated(const QString &arg1)
 {
 tmprend.setreference(arg1);
@@ -191,9 +222,8 @@ void gestion_des_patients::on_radioButton_2_clicked(bool checked)
 
 void gestion_des_patients::on_pushButton_clicked()
 {
-    statistiques *s = new statistiques();
+    statistique *s = new statistique();
     s->show();
-    QSound::play("C:/Users/user/Downloads/Mouse.wav");
 }
 
 void gestion_des_patients::on_modifier_p_2_clicked()
@@ -204,7 +234,12 @@ void gestion_des_patients::on_modifier_p_2_clicked()
 
        bool test=tmprend.modifier_rendez_vous();
 
-       if(test){refresh();}
+       if(test){refresh();
+           player = new QMediaPlayer;
+                   connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+                   player->setMedia(QUrl::fromLocalFile("C:/Users/ASUS/Downloads/modif succ.mp3"));
+                   player->setVolume(1000);
+                   player->play();}
 }
 
 void gestion_des_patients::on_comboBox_3_activated(const QString &arg1)
@@ -232,6 +267,11 @@ void gestion_des_patients::on_archiver_2_clicked()
     if(tmprend.archiver_rendez_vous()){
         refresh();
         ui->supprimer->clear();
+        player = new QMediaPlayer;
+                connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+                player->setMedia(QUrl::fromLocalFile("C:/Users/ASUS/Downloads/supp succ.mp3"));
+                player->setVolume(1000);
+                player->play();
     }
 }
 
@@ -266,4 +306,35 @@ void gestion_des_patients::on_recherche_tri_2_textChanged(const QString &arg1)
 {
     ui->tabrendez->setModel(tmprend.recherche(champ,arg1,etat));
    valeur=arg1;
+}
+
+void gestion_des_patients::on_pushButton_2_clicked()
+{
+ QPrinter printer;
+ printer.setPrinterName("printer name");
+ QPrintDialog dialog(&printer,this);
+  if(QDialog::Accepted == dialog.exec()){
+
+      if(QPrinter::Landscape != printer.orientation())
+             {
+                 printer.setOrientation(QPrinter::Landscape);
+             }
+             QPoint startPoint = QPoint(20, 20);
+             QRegion printRegion = QRegion( 20, 20, printer.paperRect().width(),printer.paperRect().height() );
+                 for( int i = 0; i < 10; ++i ) // still need to fix this
+                 {
+                     ui->tabpatient->render( &printer, startPoint, printRegion, QWidget::DrawChildren );
+                 }
+  }
+
+}
+
+void gestion_des_patients::on_comboBox_6_activated(const QString &arg1)
+{
+    ui->id_medecin->setText(arg1);
+}
+
+void gestion_des_patients::on_comboBox_7_activated(const QString &arg1)
+{
+    ui->id_med->setText(arg1);
 }

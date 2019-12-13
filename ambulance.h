@@ -13,7 +13,7 @@ public:
     bool modifier();
    QSqlQueryModel* afficher();
    QSqlQueryModel* afficher_list();
-   QSqlQueryModel *  recherche(QString);
+   QSqlQueryModel *  recherche(QString,bool *);
     void setmatricule(QString);
     void setetat(QString);
     void setdateentretient(QString);

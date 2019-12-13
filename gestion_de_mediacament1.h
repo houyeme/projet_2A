@@ -1,11 +1,12 @@
-#ifndef GESTION_DE_MEDIACAMENT_H
-#define GESTION_DE_MEDIACAMENT_H
+#ifndef GESTION_DE_MEDIACAMENT1_H
+#define GESTION_DE_MEDIACAMENT1_H
 #include <QMessageBox>
 #include <QDialog>
-#include "medicament.h"
-#include "equipement.h"
+#include "equipement_paramedicale.h"
 #include "qcustomplot.h"
 #include <QMediaPlayer>
+#include "medicament.h"
+#include "notifcation.h"
 
 namespace Ui {
 class gestion_de_mediacament1;
@@ -93,7 +94,7 @@ private slots:
 private:
     Ui::gestion_de_mediacament1 *ui;
    medicament tmpmedicament;
-   equipement tmpequipement;
+   equipement_paramedicale tmpequipement;
    int etat=0;
    QString valeur;
    QString champ="";

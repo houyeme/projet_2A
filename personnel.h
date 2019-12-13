@@ -23,8 +23,9 @@ public:
     bool ajouter();
     bool supprimer(QString);
     bool mise_ajour(QString,QString,QString);
-    void chercher(QString);
+    bool chercher(QString);
     QSqlQueryModel *afficher_list();
+
 
 protected:
     QString Matricule;

@@ -6,6 +6,7 @@ class responsable : public personnel
 {
 public:
     responsable();
+    responsable(QString id,QString mot_de_passe);
     responsable(QString id,QString mot_de_passe ,QString domaine,QString New_Mat,QString New_Nom, QString New_Prenom);
     bool ajouter();
     QSqlQueryModel * afficher();
@@ -22,6 +23,7 @@ QString get_id(){
     QString get_domaine(){
         return domaine;
     }
+     bool authentification(QString *domaine);
 private: QString id,mot_de_passe,domaine;
 };
 

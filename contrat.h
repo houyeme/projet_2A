@@ -75,6 +75,8 @@ public:
 
     QSqlQueryModel * afficher_list();
     QSqlQueryModel * afficher_list_fin(bool *);
+    QSqlQuery afficher_num_contrat();
+    QSqlQuery afficher_salaire();
 
     bool mise_ajour();
     void chercher();

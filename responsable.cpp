@@ -4,7 +4,10 @@ responsable::responsable()
 {
 
 }
-
+responsable::responsable(QString id,QString mot_de_passe){
+    this->id=id;
+    this->mot_de_passe=mot_de_passe;
+}
 responsable::responsable(QString id,QString mot_de_passe ,QString domaine,QString New_Mat,QString New_Nom, QString New_Prenom):personnel(New_Mat,New_Nom,New_Prenom){
     this->id=id;
     this->mot_de_passe=mot_de_passe;
@@ -64,4 +67,17 @@ bool responsable::mise_ajour(QString MAT, QString ID,QString domaine, QString MO
         query2.bindValue(":MAT",MAT);
 
     return((personnel::mise_ajour(MAT,NOM,PRENOM))&&(query2.exec()));
+}
+
+bool responsable::authentification(QString *domaine)
+{
+    QSqlQuery q;
+    q.prepare("select domaine from responsable where (id=:id) and (mot_de_passe=:mot_de_passe)");
+    q.bindValue(":id",id);
+    q.bindValue(":mot_de_passe",mot_de_passe);
+    q.exec();
+    while (q.next()) {
+        *domaine=q.value(0).toString();
+    }
+    return q.first();
 }

@@ -47,6 +47,13 @@ QSqlQueryModel * medecin::afficher_liste_mat(){
     model->setHeaderData(0 ,Qt::Horizontal,QObject::tr("MATRICULE"));
     return model;
 }
+QSqlQueryModel * medecin::afficher_liste_id(){
+    QSqlQueryModel *model=new QSqlQueryModel();
+
+    model->setQuery("SELECT id FROM MEDECIN");
+    model->setHeaderData(0 ,Qt::Horizontal,QObject::tr("MATRICULE"));
+    return model;
+}
 bool medecin::mise_ajour(QString MAT,QString ID,QString SPECIALITE, int NUM_CABINET, QString MOT_DE_PASSE ,QString NOM, QString PRENOM){
 
     QSqlQuery query2;

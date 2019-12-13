@@ -2,6 +2,8 @@
 #include <QDebug>
 #include<QString>
 #include<QSqlQueryModel>
+#include<QMediaPlayer>
+
 rendez_vous::rendez_vous()
 {}
 rendez_vous::rendez_vous(QString id_sec, QString reference,QDate date_rendez_vous,int num_rendez_vous,QString id_med){
@@ -131,7 +133,7 @@ bool rendez_vous::modifier_rendez_vous(){
 
 
 }
-void rendez_vous::chercher (){
+bool rendez_vous::chercher (){
 
 QSqlQuery query1;
 query1.prepare("select id_secretaire,references_patient,date_rendez_vous,id_med from rendez_vous where num_rendez_vous=:num_rendez_vous");
@@ -145,6 +147,7 @@ reference = query1.value(1).toString();
 date_rendez_vous = query1.value(2).toDate();
 id_med = query1.value(3).toString();
 }
+return  query1.first();
 }
 QSqlQueryModel* rendez_vous::afficher_liste_rendez_vous(){
     QSqlQueryModel *model= new QSqlQueryModel ();

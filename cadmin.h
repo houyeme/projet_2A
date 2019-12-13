@@ -1,11 +1,11 @@
 #ifndef CADMIN_H
 #define CADMIN_H
 
-
+#include "personnel.h"
 #include<QString>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
-class cadmin
+class cadmin: public personnel
 {
 public:
     cadmin();

@@ -9,6 +9,7 @@
 #include "secretaire.h"
 #include "chauffeur.h"
 #include <QDate>
+#include <QMediaPlayer>
 namespace Ui {
 class admin_panal;
 }
@@ -22,6 +23,7 @@ public:
     ~admin_panal();
     void initialiser_formulaire();
     void initialiser_formulaire2();
+    bool verif_ajouter_medecin();
     bool verif_formulaire_m();
     bool verif_formulaire_ph();
     bool verif_formulaire_r();
@@ -39,7 +41,9 @@ public:
     void initialiser_formulaire11();
     void initialiser_formulaire12();
 
-
+    void set_mode(QString mode);
+void dark_mode();
+void par_defaut();
 private slots:
 
     void on_pushButton_clicked();
@@ -137,6 +141,14 @@ private slots:
     void afficher_notification(int *);
 
     void makePolt();
+    void on_pushButton_31_clicked();
+
+    void on_pushButton_17_clicked();
+
+    void on_horizontalSlider_sliderMoved(int position);
+
+
+
 private:
     Ui::admin_panal *ui;
     medecin tmpmedecin;
@@ -151,6 +163,7 @@ private:
     int ordre=0; //ordre tri
     QString valeur;
     int x=0;
+    QMediaPlayer *music =new QMediaPlayer();
 
 };
 

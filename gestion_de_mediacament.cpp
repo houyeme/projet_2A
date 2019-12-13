@@ -3,9 +3,9 @@
 #include "medicament.h"
 #include <src/SmtpMime>
 #include "qcustomplot.h"
-#include "notification.h"
-
-
+#include "notifcation.h"
+#include <iostream>
+using namespace std;
 gestion_de_mediacament::gestion_de_mediacament(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::gestion_de_mediacament)
@@ -16,24 +16,69 @@ gestion_de_mediacament::gestion_de_mediacament(QWidget *parent) :
      ui->prix_2->setValidator(new QRegExpValidator(QRegExp("[0-9]*"),this));
      ui->type_3->setValidator(new QRegExpValidator(QRegExp("[a-z-A-Z]+"),this));
      music->setMedia(QUrl("C:/Users/USER/Desktop/True Detective - Intro Opening Song - Theme (The Handsome Family - Far From Any Road) + LYRICS.mp3"));
-
-
-}
+    //ARDUINO
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+     switch(ret){
+     case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+         break;
+     case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+        break;
+     case(-1):qDebug() << "arduino is not available";
+     }
+ QObject::connect(A.getserial(),SIGNAL(A.read_from_arduino()),this,SLOT(update_label()));
+ // permet de lancer
+      //le slot update_label suite à la reception du signal readyRead (reception des données).
+ }
 
 gestion_de_mediacament::~gestion_de_mediacament()
 {
     delete ui;
+}
+
+//ARDUINO
+bool gestion_de_mediacament::verif_data(QByteArray data,char c){
+
+    qDebug() << data;
+    bool test=false;
+    int i;
+    for(i=0;i<data.length();i++){
+    if(data.at(i)==c){
+        test=true;
+        return  test;
+    }}
+
+
+return test;
 
 }
+void gestion_de_mediacament::update_label()
+{
+    if(A.getserial()->waitForReadyRead(10))
+    {    data = A.read_from_arduino();
+
+    if(verif_data(data,'1')){
+     notifcation n("stock","stock insuffisant");
+     n.afficher();}
+       }
+    if(verif_data(data,'2')){
+        notifcation n("movement","veuillez verifier la camera de surveillance svp");
+        n.afficher();}
+
+    if(verif_data(data,'4')){
+        notifcation n("température","température >25");
+        n.afficher();
+       }
+  }
+
 
 void gestion_de_mediacament:: refresh()
 {
     ui->tabmedicament->setModel(tmpmedicament.afficher_medicament());
-    ui->tabequipement->setModel(tmpequipement.afficher_equipement());
+    ui->tabequipement->setModel(tmpequipement_paramedicale.afficher_equipement_paramedicale());
     ui->comboBox->setModel(tmpmedicament.afficher_list());
     ui->comboBox_2->setModel(tmpmedicament.afficher_list());
-    ui->comboBox_4->setModel(tmpequipement.afficher_list());
-    ui->comboBox_3->setModel(tmpequipement.afficher_list());
+    ui->comboBox_4->setModel(tmpequipement_paramedicale.afficher_list());
+    ui->comboBox_3->setModel(tmpequipement_paramedicale.afficher_list());
 }
 
 void gestion_de_mediacament::on_ajouter_clicked()
@@ -48,10 +93,17 @@ void gestion_de_mediacament::on_ajouter_clicked()
     bool test=m.ajouter_medicament();
     if(test)
     {   refresh();
+        if(A.getserial()->waitForReadyRead(50))
+        data = A.read_from_arduino();
+        qDebug() << "data : " << data;
         QMessageBox::information(this, "PAS D'ERREUR", " medicament ajouté");
     }
     else
     {
+        if(A.getserial()->waitForReadyRead(50))
+
+            data = A.read_from_arduino();
+        qDebug() << "data : " << data;
         QMessageBox::critical(this, " ERREUR ", "medicament non ajouté ");
     }
 }
@@ -69,9 +121,8 @@ void gestion_de_mediacament::on_supprimer_clicked()
    if(test)
    {   refresh();
        QMessageBox::information(this, "PAS D'ERREUR", " medicament supprimé");
-       QString okd="";
-            notification ok;
-            ok.notification_supp_med(okd);
+   notifcation n("Attention ","Un medicament est supprimé de la base !");
+   n.afficher();
    }
    else
    {
@@ -131,10 +182,10 @@ void gestion_de_mediacament::on_ajouter_2_clicked()
      QString nom=ui->nom_2->text();
      QString type=ui->type_3->text();
      QString id_fournisseur=ui->idfour_2->text();
-     equipement m(reference,nom,type,id_fournisseur);
+     equipement_paramedicale m(reference,nom,type,id_fournisseur);
       if (ui->type_3->hasAcceptableInput() )
       {
-     bool test=m.ajouter_equipement();
+     bool test=m.ajouter_equipement_paramedicale();
       if(test)
       {   refresh();
           QMessageBox::information(this, "PAS D'ERREUR", " equipement ajouté");
@@ -148,11 +199,11 @@ void gestion_de_mediacament::on_ajouter_2_clicked()
 
 void gestion_de_mediacament::on_modifier_2_clicked()
 {
-    tmpequipement.setnom(ui->nomnom->text());
-    tmpequipement.settype(ui->typetype->text());
-    tmpequipement.setid_fournisseur(ui->fourfour->text());
+    tmpequipement_paramedicale.setnom(ui->nomnom->text());
+    tmpequipement_paramedicale.settype(ui->typetype->text());
+    tmpequipement_paramedicale.setid_fournisseur(ui->fourfour->text());
 
-    bool test=tmpequipement.modifier_equipement();
+    bool test=tmpequipement_paramedicale.modifier_equipement_paramedicale();
     if(test)
     {   refresh();
         QMessageBox::information(this, "PAS D'ERREUR", " equipement modifié");
@@ -166,15 +217,14 @@ void gestion_de_mediacament::on_modifier_2_clicked()
 void gestion_de_mediacament::on_supprimer_2_clicked()
 {
     QString reference = ui->sup_line_2->text();
-     equipement m;
+     equipement_paramedicale m;
      m.setrefrence(reference);
-     bool test=m.supprimer_equipement();
+     bool test=m.supprimer_equipement_paramedicale();
      if(test)
      {   refresh();
          QMessageBox::information(this, "PAS D'ERREUR", " equipement supprimé");
-         QString okd="";
-              notification ok;
-              ok.notification_supp_equi(okd);
+     notifcation n("Attention ","Un equipement est supprimé de la base !");
+     n.afficher();
      }
      else
      {
@@ -185,11 +235,11 @@ void gestion_de_mediacament::on_supprimer_2_clicked()
 
 void gestion_de_mediacament::on_comboBox_3_activated(const QString &arg1)
 {
-    tmpequipement.setrefrence(arg1);
-    tmpequipement.chercher();
-    ui->nomnom->setText(tmpequipement.get_nom());
-    ui->typetype->setText(tmpequipement.get_type());
-    ui->fourfour->setText(tmpequipement.get_id_fournisseur());
+    tmpequipement_paramedicale.setrefrence(arg1);
+    tmpequipement_paramedicale.chercher();
+    ui->nomnom->setText(tmpequipement_paramedicale.get_nom());
+    ui->typetype->setText(tmpequipement_paramedicale.get_type());
+    ui->fourfour->setText(tmpequipement_paramedicale.get_id_fournisseur());
 }
 
 void gestion_de_mediacament::on_comboBox_4_activated(const QString &arg1)
@@ -199,7 +249,7 @@ ui->sup_line_2->setText(arg1);
 
 void gestion_de_mediacament::on_lineEdit_17_textChanged(const QString &arg1)
 {
-    ui->tabequipement->setModel(tmpequipement.recherche(champ,arg1,etat));
+    ui->tabequipement->setModel(tmpequipement_paramedicale.recherche(champ,arg1,etat));
     valeur=arg1;
 
 }
@@ -207,7 +257,7 @@ void gestion_de_mediacament::on_lineEdit_17_textChanged(const QString &arg1)
 void gestion_de_mediacament::on_checkBox_2_stateChanged(int arg1)
 {
     etat=arg1;
-    ui->tabequipement->setModel(tmpequipement.recherche(champ,valeur,etat));
+    ui->tabequipement->setModel(tmpequipement_paramedicale.recherche(champ,valeur,etat));
 }
 
 void gestion_de_mediacament::on_envoyer_email_bott_clicked()
@@ -410,4 +460,9 @@ void gestion_de_mediacament::on_pushButton_10_clicked()
 void gestion_de_mediacament::on_verticalSlider_sliderMoved(int position)
 {
     music->setVolume(position);
+}
+
+void gestion_de_mediacament::on_pushButton_13_clicked()
+{
+    update_label();
 }

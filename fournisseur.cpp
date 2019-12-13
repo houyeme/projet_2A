@@ -18,6 +18,7 @@ fournisseur::fournisseur(QString id ,QString nom ,QString prenom , QString telep
   this->adresse=adresse;
   this->domaine=domaine;
 }
+
 QString fournisseur::get_id(){return  id;}
 QString fournisseur::get_nom(){return nom;}
 QString fournisseur::get_prenom(){return prenom;}
@@ -125,3 +126,5 @@ query->exec();
 model->setQuery(*query);
 return model;
 }
+
+

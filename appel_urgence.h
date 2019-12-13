@@ -19,6 +19,8 @@ public:
     void setadresse(QString);
     void setblessure(QString);
     void chercher2();
+    QSqlQueryModel *  recherche2(QString,bool *);
+
 
     QString getfichier();
     QString getNom();

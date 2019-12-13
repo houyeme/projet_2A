@@ -6,8 +6,8 @@
 #include <QWidget>
 #include <QDate>
 #include <QSqlQuery>
-#include <QSound>
-
+#include <QMediaPlayer>
+#include <QObject>
 class rendez_vous
 {
 public:
@@ -37,7 +37,7 @@ public:
     QString generate_time(int h,int s,int m);
     QSqlQueryModel * recherche(QString,QString,int);
 bool recherche_rendez_vous();
-    void chercher();
+    bool chercher();
     private:
     QString id_sec;
     QString reference;
@@ -45,6 +45,7 @@ bool recherche_rendez_vous();
     int num_rendez_vous;
     QString id_med;
     QTime time_rendez_vous;
+    QMediaPlayer *player;
 };
 
 #endif // RENDEZ_VOUS_H

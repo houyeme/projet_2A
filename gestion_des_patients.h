@@ -3,8 +3,9 @@
 #include <QMessageBox>
 #include "rendez_vous.h"
 #include "patient.h"
+#include "medecin.h"
 #include <QDialog>
-
+#include<QMediaPlayer>
 namespace Ui {
 class gestion_des_patients;
 }
@@ -64,20 +65,23 @@ void on_archiver_2_clicked();
 
 
 
-void on_recherche_tri_cursorPositionChanged(int arg1, int arg2);
 
 
 void on_comboBox_5_activated(const QString &arg1);
 
 void on_champ_activated(const QString &arg1);
 
-void on_champ_currentIndexChanged(const QString &arg1);
 
 void on_checkBox_2_stateChanged(int arg1);
 
-void on_recherche_tri_2_cursorPositionChanged(int arg1, int arg2);
 
 void on_recherche_tri_2_textChanged(const QString &arg1);
+
+void on_pushButton_2_clicked();
+
+void on_comboBox_6_activated(const QString &arg1);
+
+void on_comboBox_7_activated(const QString &arg1);
 
 private:
     Ui::gestion_des_patients *ui;
@@ -86,6 +90,8 @@ private:
     QString valeur,sexe;
     rendez_vous tmprend;
     QString champ="";
+    medecin tmpmedecin;
+    QMediaPlayer *player;
 };
 
 #endif // GESTION_DES_PATIENTS_H

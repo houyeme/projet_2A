@@ -39,7 +39,7 @@ bool personnel::mise_ajour(QString MAT, QString NOM, QString PRENOM){
     query.bindValue(":PRENOM",PRENOM);
     return (query.exec());
 }
-void personnel::chercher (QString MAT){
+bool personnel::chercher (QString MAT){
 QSqlQuery query;
 query.prepare("SELECT MATRICULE, NOM, PRENOM FROM PERSONNEL WHERE MATRICULE=:MAT");
 query.bindValue(":MAT",MAT);
@@ -50,4 +50,6 @@ Matricule = query.value(0).toString();
 Nom = query.value(1).toString();
 Prenom= query.value(2).toString();
 }
+return query.first();
 }
+

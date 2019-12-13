@@ -5,5 +5,7 @@
         <file>icon-authentification.png</file>
         <file>icon2.png</file>
         <file>mainbg.png</file>
+        <file>dark_bg.png</file>
+        <file>dark_icon.png</file>
     </qresource>
 </RCC>

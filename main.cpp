@@ -1,16 +1,19 @@
-#include "login.h"
-#include "connexion.h"
-#include "gestion_de_mediacament.h"
-#include <QApplication>
-#include "dialog.h"
+#include "mainwindow.h"
 
+#include <QApplication>
+#include "connexion.h"
+#include <iostream>
+#include <qdebug.h>
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
-    login w;
+    MainWindow w;
+Connexion c;
+w.setWindowTitle("");
+    w.setWindowIcon(QIcon ("C:/Users/ASUS/Desktop/icon.png"));
+    if(c.ouvrirConnexion()){
     w.show();
-    connexion c;
-    bool test=c.ouvrirConnexion();
+
+    }
     return a.exec();
 }

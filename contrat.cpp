@@ -89,3 +89,16 @@ QSqlQueryModel * contrat::afficher_list_fin(bool *test){
     *test=query.first();
     return  model;
 }
+QSqlQuery contrat::afficher_num_contrat (){
+QSqlQuery q;
+        q.prepare("select num_contrat from contrat");
+        q.exec();
+        return  q;
+
+}
+QSqlQuery contrat ::afficher_salaire(){
+   QSqlQuery q;
+    q.prepare("select salaire from contrat groupe by num_contrat");
+    q.exec();
+    return  q;
+}

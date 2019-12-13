@@ -40,14 +40,17 @@ bool ambulance::ajouter()
 query.bindValue(":DATE_DERNIER_ENTRETIENT", date_dernier_entretient);
 return query.exec();
 }
-QSqlQueryModel * ambulance:: recherche(QString mat)
+QSqlQueryModel * ambulance:: recherche(QString mat,bool *test)
 {
     QSqlQueryModel * model=new QSqlQueryModel();
-    model->setQuery("select * from AMBULANCE where MATRICULE_V='"+mat+"'");
+    QSqlQuery q;
+    q.prepare("select * from AMBULANCE where MATRICULE_V='"+mat+"'");
+    q.exec();
+    model->setQuery(q);
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("MATRICULE_V"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("etat"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("date_dernier_entretient"));
-
+    *test=q.first();
     return model;
 
 }

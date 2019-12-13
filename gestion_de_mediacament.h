@@ -3,10 +3,10 @@
 #include <QMessageBox>
 #include <QDialog>
 #include "medicament.h"
-#include "equipement.h"
+#include "equipement_paramedicale.h"
 #include "qcustomplot.h"
 #include <QMediaPlayer>
-
+#include "arduino.h"
 namespace Ui {
 class gestion_de_mediacament;
 }
@@ -18,8 +18,13 @@ class gestion_de_mediacament : public QDialog
 public:
     explicit gestion_de_mediacament(QWidget *parent = nullptr);
     ~gestion_de_mediacament();
+    bool verif_data(QByteArray data,char c);
 
 private slots:
+    //ARDUINO
+    void update_label();
+    // ARIJ'S WORK PLEASE NOTE HER WELL ELSE F U.
+
     void on_ajouter_clicked();
 
     void on_supprimer_clicked();
@@ -82,7 +87,6 @@ private slots:
 
     void on_pushButton_12_clicked();
 
-    void on_lineEdit_16_cursorPositionChanged(int arg1, int arg2);
 
     void on_pushButton_9_clicked();
 
@@ -90,14 +94,20 @@ private slots:
 
     void on_verticalSlider_sliderMoved(int position);
 
+    void on_pushButton_13_clicked();
+
 private:
     Ui::gestion_de_mediacament *ui;
    medicament tmpmedicament;
-   equipement tmpequipement;
+   equipement_paramedicale tmpequipement_paramedicale;
    int etat=0;
    QString valeur;
    QString champ="";
      QMediaPlayer *music =new QMediaPlayer();
+
+     //ARDUINO
+     Arduino A;
+     QByteArray data;
 
 };
 

@@ -3,7 +3,6 @@
 #include<QString>
 #include<QSqlQuery>
 #include<QSqlQueryModel>
-#include <QSound>
 class patient
 {
 public:

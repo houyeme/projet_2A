@@ -3,7 +3,7 @@
 #include "medicament.h"
 #include <src/SmtpMime>
 #include "qcustomplot.h"
-#include "notification.h"
+#include "notifcation.h"
 
 
 gestion_de_mediacament1::gestion_de_mediacament1(QWidget *parent) :
@@ -29,7 +29,7 @@ gestion_de_mediacament1::~gestion_de_mediacament1()
 void gestion_de_mediacament1:: refresh()
 {
     ui->tabmedicament->setModel(tmpmedicament.afficher_medicament());
-    ui->tabequipement->setModel(tmpequipement.afficher_equipement());
+    ui->tabequipement->setModel(tmpequipement.afficher_equipement_paramedicale());
     ui->comboBox->setModel(tmpmedicament.afficher_list());
     ui->comboBox_2->setModel(tmpmedicament.afficher_list());
     ui->comboBox_4->setModel(tmpequipement.afficher_list());
@@ -70,8 +70,8 @@ void gestion_de_mediacament1::on_supprimer_clicked()
    {   refresh();
        QMessageBox::information(this, "PAS D'ERREUR", " medicament supprimé");
        QString okd="";
-            notification ok;
-            ok.notification_supp_med(okd);
+       notifcation n("Attention ","Un medicament est supprimé de la base !");
+
    }
    else
    {
@@ -131,10 +131,10 @@ void gestion_de_mediacament1::on_ajouter_2_clicked()
      QString nom=ui->nom_2->text();
      QString type=ui->type_3->text();
      QString id_fournisseur=ui->idfour_2->text();
-     equipement m(reference,nom,type,id_fournisseur);
+     equipement_paramedicale m(reference,nom,type,id_fournisseur);
       if (ui->type_3->hasAcceptableInput() )
       {
-     bool test=m.ajouter_equipement();
+     bool test=m.ajouter_equipement_paramedicale();
       if(test)
       {   refresh();
           QMessageBox::information(this, "PAS D'ERREUR", " equipement ajouté");
@@ -152,7 +152,7 @@ void gestion_de_mediacament1::on_modifier_2_clicked()
     tmpequipement.settype(ui->typetype->text());
     tmpequipement.setid_fournisseur(ui->fourfour->text());
 
-    bool test=tmpequipement.modifier_equipement();
+    bool test=tmpequipement.modifier_equipement_paramedicale();
     if(test)
     {   refresh();
         QMessageBox::information(this, "PAS D'ERREUR", " equipement modifié");
@@ -166,15 +166,14 @@ void gestion_de_mediacament1::on_modifier_2_clicked()
 void gestion_de_mediacament1::on_supprimer_2_clicked()
 {
     QString reference = ui->sup_line_2->text();
-     equipement m;
+     equipement_paramedicale m;
      m.setrefrence(reference);
-     bool test=m.supprimer_equipement();
+     bool test=m.supprimer_equipement_paramedicale();
      if(test)
      {   refresh();
          QMessageBox::information(this, "PAS D'ERREUR", " equipement supprimé");
          QString okd="";
-              notification ok;
-              ok.notification_supp_equi(okd);
+            notifcation n("Attention ","Un medicament est supprimé de la base !");
      }
      else
      {

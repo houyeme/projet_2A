@@ -95,12 +95,26 @@ bool Appel_urgence::supprimer2(QString num)
 bool Appel_urgence::modifier2()
 {
     QSqlQuery query;
-    query.prepare("update SERVICEURGENCE set NOM_PRENOM=:NOM_PRENOM,ADRESSE=:ADRESSE,BLESSURE:BLESSURE where NUM_FICHIER=:NUM_FICHIER");
+    query.prepare("update SERVICEURGENCE set NOM_PRENOM=:NOM_PRENOM,ADRESSE=:ADRESSE,BLESSURE=:BLESSURE where NUM_FICHIER=:NUM_FICHIER");
     query.bindValue(":NUM_FICHIER",Num_fichier);
     query.bindValue(":NOM_PRENOM",Nom_Prenom);
    query.bindValue(":ADRESSE", Adresse);
   query.bindValue(":BLESSURE", Blessure);
     return    query.exec();
 
+}
+QSqlQueryModel*  Appel_urgence::recherche2(QString mat,bool *test)
+{
+    QSqlQueryModel * model=new QSqlQueryModel();
+    QSqlQuery q;
+    q.prepare("select * from SERVICEURGENCE where NUM_FICHIER='"+mat+"'");
+    q.exec();
+    model->setQuery(q);
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("NUM_FICHIER"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM_PRENOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("ADRESSE"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("BLESSURE"));
+    *test=q.first();
+    return model;
 }
 

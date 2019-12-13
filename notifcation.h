@@ -6,10 +6,13 @@ class notifcation
 {
 public:
     notifcation();
+    notifcation(QString titre,QString text);
  void afficher();
 
+
 private:
-    QString text="un contrat se termine bientot";
+    QString text;
+    QString titre;
 
 };
 

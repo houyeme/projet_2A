@@ -11,6 +11,8 @@ public:
 bool ajouter();
 QSqlQueryModel * afficher();
 QSqlQueryModel * afficher_liste_mat();
+QSqlQueryModel * afficher_liste_id();
+
 void chercher(QString);
 bool mise_ajour(QString,QString,QString,int,QString,QString,QString);
 QSqlQueryModel *recherche(QString champ,QString valeur,int etat);

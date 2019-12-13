@@ -7,6 +7,7 @@ class fournisseur
 {public:
     fournisseur();
     fournisseur(QString,QString,QString,QString,QString,QString);
+
     QString get_id();
     QString get_nom();
     QString get_prenom();
@@ -19,6 +20,7 @@ class fournisseur
     void set_telephone(QString);
     void set_adresse(QString);
     void set_domaine(QString);
+
 
     bool ajouter();
     QSqlQueryModel * afficher();
