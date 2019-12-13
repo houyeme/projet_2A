@@ -1,32 +1,29 @@
 #ifndef LOGIN_H
 #define LOGIN_H
-#include <QSound>
-
 
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class LOGIN; }
+namespace Ui { class login; }
 QT_END_NAMESPACE
 
-class LOGIN : public QMainWindow
+class login : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    LOGIN(QWidget *parent = nullptr);
-    ~LOGIN();
+    login(QWidget *parent = nullptr);
+    ~login();
 
 private slots:
     void on_connecter_clicked();
-    void on_comboBox_currentIndexChanged(int index);
 
-    void on_quitter_clicked();
+    void on_comboBox_activated(int index);
 
-    void on_checkBox_clicked(bool checked);
+    void on_pushButton_clicked();
 
 private:
-    Ui::LOGIN *ui;
-     int espace=-1;//espace login
+    Ui::login *ui;
+    int espace=-1 ;//espace login
 };
 #endif // LOGIN_H

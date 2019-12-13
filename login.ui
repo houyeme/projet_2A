@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LOGIN</class>
- <widget class="QMainWindow" name="LOGIN">
+ <class>login</class>
+ <widget class="QMainWindow" name="login">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,16 +11,68 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>LOGIN</string>
+   <string>login</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#login{
+
+background-color: transparent;
+
+border-image: url(:/img/bg.png);
+
+background: none;
+
+border: none;
+
+background-repeat: none;
+
+}
+
+
+
+#ok:login{
+
+background-color: transparent;
+
+border-image:url(:/img/bg.png);
+
+background: none;
+
+border: none;
+
+background-repeat: none;
+
+}</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="id">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>210</y>
+      <width>161</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Identifiant</string>
+    </property>
+   </widget>
    <widget class="QPushButton" name="connecter">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>350</y>
-      <width>61</width>
-      <height>41</height>
+      <x>360</x>
+      <y>370</y>
+      <width>81</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
@@ -44,7 +96,7 @@
 
 background-color: transparent;
 
-border-image:url(:/image/login.png);
+border-image:url(:/img/login.png);
 
 background: none;
 
@@ -56,11 +108,11 @@ background-repeat: none;
 
 
 
-#ok:connecter{
+#ok:ajouter{
 
 background-color: transparent;
 
-border-image:url(:/image/login.png);
+border-image:url(:/img/login.png);
 
 background: none;
 
@@ -74,31 +126,10 @@ background-repeat: none;
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="mdp">
-    <property name="geometry">
-     <rect>
-      <x>340</x>
-      <y>230</y>
-      <width>121</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>DoctorJekyll</family>
-      <pointsize>16</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
-     </font>
-    </property>
-    <property name="text">
-     <string>Mot de passe</string>
-    </property>
-   </widget>
    <widget class="QLineEdit" name="mdp_edit">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>370</x>
       <y>260</y>
       <width>211</width>
       <height>31</height>
@@ -114,82 +145,88 @@ background-repeat: none;
    <widget class="QLineEdit" name="id_edit">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>190</y>
+      <x>370</x>
+      <y>200</y>
       <width>211</width>
       <height>31</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="id">
+   <widget class="QLabel" name="mdp">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>160</y>
-      <width>171</width>
+      <x>260</x>
+      <y>270</y>
+      <width>101</width>
       <height>20</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Doctor Jekyll NF</family>
-      <pointsize>16</pointsize>
-      <weight>50</weight>
-      <bold>false</bold>
+      <pointsize>9</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="text">
-     <string>Identifiant</string>
+     <string>Mot de passe</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>320</x>
       <y>310</y>
-      <width>211</width>
-      <height>31</height>
+      <width>171</width>
+      <height>41</height>
      </rect>
     </property>
     <item>
      <property name="text">
-      <string>selectionner votre choix</string>
+      <string>selectionner un espace</string>
      </property>
     </item>
     <item>
      <property name="text">
-      <string>secretaire</string>
+      <string>espace admin</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>espace pharmacien</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>espace responsable</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>espace secretaire</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>espace medcin</string>
      </property>
     </item>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>2</y>
-      <width>751</width>
-      <height>571</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="quitter">
-    <property name="geometry">
-     <rect>
-      <x>650</x>
-      <y>492</y>
-      <width>41</width>
-      <height>31</height>
+      <x>670</x>
+      <y>480</y>
+      <width>51</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">#quitter{
+     <string notr="true">#pushButton{
 
 background-color: transparent;
 
-border-image:url(:/image/logout.png);
+border-image:url(:/img/logout.png);
 
 background: none;
 
@@ -201,11 +238,11 @@ background-repeat: none;
 
 
 
-#ok:quitter{
+#ok:pushButton{
 
 background-color: transparent;
 
-border-image:url(:/image/logout.png);
+border-image:url(:/img/logout.png);
 
 background: none;
 
@@ -219,28 +256,6 @@ background-repeat: none;
      <string/>
     </property>
    </widget>
-   <widget class="QCheckBox" name="checkBox">
-    <property name="geometry">
-     <rect>
-      <x>510</x>
-      <y>270</y>
-      <width>16</width>
-      <height>17</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>CheckBox</string>
-    </property>
-   </widget>
-   <zorder>label</zorder>
-   <zorder>connecter</zorder>
-   <zorder>mdp</zorder>
-   <zorder>mdp_edit</zorder>
-   <zorder>id_edit</zorder>
-   <zorder>id</zorder>
-   <zorder>comboBox</zorder>
-   <zorder>quitter</zorder>
-   <zorder>checkBox</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -248,7 +263,7 @@ background-repeat: none;
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

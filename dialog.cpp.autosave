@@ -1,0 +1,82 @@
+#include "dialog.h"
+#include "ui_dialog.h"
+
+Dialog::Dialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::Dialog)
+{
+    ui->setupUi(this);
+    refresh();
+    ui->quantite_17->setValidator(new QRegExpValidator(QRegExp("[0-9]*"),this));
+    ui->prix_17->setValidator(new QRegExpValidator(QRegExp("[0-9]*"),this));
+    ui->type_29->setValidator(new QRegExpValidator(QRegExp("[a-z-A-Z]+"),this));
+    music->setMedia(QUrl("C:/Users/USER/Desktop/True Detective - Intro Opening Song - Theme (The Handsome Family - Far From Any Road) + LYRICS.mp3"));
+}
+
+Dialog::~Dialog()
+{
+    delete ui;
+}
+void Dialog:: refresh()
+{ ui->tabmedicament_5->setModel(tmpmedicament.afficher_medicament());
+ui->tabequipement_5->setModel(tmpequipement.afficher_equipement());
+ui->comboBox_17->setModel(tmpmedicament.afficher_list());
+ui->comboBox_18->setModel(tmpmedicament.afficher_list());
+ui->comboBox_19->setModel(tmpequipement.afficher_list());
+ui->comboBox_20->setModel(tmpequipement.afficher_list());
+}
+
+
+void Dialog::on_ajouter_9_clicked()
+{
+    QString reference=ui->reference_13->text();
+    QString etat=ui->type_29->text();
+    int quantite=ui->quantite_17->text().toInt();
+    int prix=ui->prix_17->text().toInt();
+    medicament m(reference,etat,quantite,prix);
+    if (ui->prix_17->hasAcceptableInput() && ui->quantite_17->hasAcceptableInput())
+    {
+    bool test=m.ajouter_medicament();
+    if(test)
+    {   refresh();
+        QMessageBox::information(this, "PAS D'ERREUR", " medicament ajouté");
+    }
+    else
+    {
+        QMessageBox::critical(this, " ERREUR ", "medicament non ajouté ");
+    }
+}
+}
+
+void Dialog::on_comboBox_17_activated(const QString &arg1)
+{
+    tmpequipement.setrefrence(arg1);
+    tmpequipement.chercher();
+    ui->nomnom_5->setText(tmpequipement.get_nom());
+    ui->typetype_5->setText(tmpequipement.get_type());
+    ui->fourfour_5->setText(tmpequipement.get_id_fournisseur());
+}
+
+void Dialog::on_modifier_9_clicked()
+{
+    tmpmedicament.setetat(ui->type_31->text());
+    tmpmedicament.setquantitte(ui->quantite_19->text().toInt());
+    tmpmedicament.setprix(ui->prix_20->text().toInt());
+
+    bool test=tmpmedicament.modifier_medicament();
+    if(test)
+    {   refresh();
+        QMessageBox::information(this, "PAS D'ERREUR", " medicament modifier");
+    }
+    else
+    {
+        QMessageBox::critical(this, " ERREUR ", "medicament non modifié ");
+    }
+}
+
+void Dialog::on_champ_9_activated(const QString &arg1)
+{
+    ui->lineEdit_24->setDisabled(false);
+    champ=arg1;
+    ui->checkBox_9->setDisabled(false);
+}

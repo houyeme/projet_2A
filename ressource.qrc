@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>add.png</file>
+        <file>login.png</file>
+        <file>logout.png</file>
+        <file>modify.jpg</file>
+        <file>supprimer.png</file>
+        <file>modify.png</file>
+        <file>email.png</file>
+        <file>envoyer.png</file>
+        <file>bg.png</file>
+        <file>mainbg.png</file>
+    </qresource>
+</RCC>

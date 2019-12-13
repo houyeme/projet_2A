@@ -1,21 +1,16 @@
 #include "login.h"
-#include "connexions.h"
-#include <QFile>
+#include "connexion.h"
+#include "gestion_de_mediacament.h"
 #include <QApplication>
+#include "dialog.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QFile stylefile(":/image/a.qss");
-    stylefile.open(QFile::ReadOnly);
-    QString style(stylefile.readAll());
-    a.setStyleSheet(style);
-
-    LOGIN w;
-    Connexions c;
-    if(c.ouvrirConnexion()){
+    login w;
     w.show();
-    }
+    connexion c;
+    bool test=c.ouvrirConnexion();
     return a.exec();
 }
